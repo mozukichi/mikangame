@@ -7,7 +7,7 @@ var MainGameScene = function() {
     this.phase = 'start';
 
     // ライフ
-    this.life = 10; // 初期ライフ
+    this.life = 5; // 初期ライフ
 
     // ライフ消失アニメーション
     this._lifePhase = null;
@@ -64,6 +64,9 @@ MainGameScene.prototype.update = function(delta) {
         case 'gameover':
             // ゲームオーバー
             break;
+        case 'clear':
+            // クリア
+            break;
         default:
             // nothing to do
             break;
@@ -97,11 +100,21 @@ MainGameScene.prototype._gamePhase = function(delta) {
         }.bind(this));
 
         // みかん取得効果音を再生
-        if (this.score % 10 == 0) {
+        if (this.score != 100 && this.score % 10 == 0) {
             // 10個毎に「やったね」を再生
             Audio.play('getmikan', function() {
                 Audio.play('yattane');
             });
+        } else if (this.score >= 100) {
+            // クリア
+            Audio.stopMusic();
+            Audio.play('getmikan', function() {
+                Audio.play('complete', function() {
+                    // エンディングへ
+                    GameSystem.currentScene = new EndingScene();
+                });
+            });
+            this.phase = 'claer';
         } else {
             Audio.play('getmikan');
         }

@@ -12,13 +12,15 @@ Asset.assets = [
     { type: 'image', name: 'mikan',       src: 'assets/mikan.png' },
     { type: 'image', name: 'life',        src: 'assets/life.png' },
     { type: 'image', name: 'star',        src: 'assets/star.png' },
+    { type: 'image', name: 'ending',      src: 'assets/ending.png' },
 
     // 効果音
     { type: 'sound', name: 'gamestart',   src: 'assets/gamestart.mp3' },
     { type: 'sound', name: 'getmikan',    src: 'assets/getmikan.mp3' },
     { type: 'sound', name: 'lostmikan',   src: 'assets/lostmikan.mp3' },
     { type: 'sound', name: 'yattane',     src: 'assets/yattane.mp3' },
-    { type: 'sound', name: 'gameover',    src: 'assets/gameover.mp3' }
+    { type: 'sound', name: 'gameover',    src: 'assets/gameover.mp3' },
+    { type: 'sound', name: 'complete',    src: 'assets/complete.mp3' }
 ];
 
 
