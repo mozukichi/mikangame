@@ -7,7 +7,7 @@ var MainGameScene = function() {
     this.phase = 'start';
 
     // ライフ
-    this.life = 3; // 初期ライフ
+    this.life = 10; // 初期ライフ
 
     // ライフ消失アニメーション
     this._lifePhase = null;
@@ -25,6 +25,17 @@ var MainGameScene = function() {
 
     // みかん落下時のイベント
     this.mikanController.onLostMikan = this._onLostMikan.bind(this);
+
+    // スコアあたりのみかん出現頻度
+    this.DIFFICULTY_TABLE = [
+        { score: 10, interval: 2.8 },
+        { score: 20, interval: 2.5 },
+        { score: 30, interval: 2.2 },
+        { score: 40, interval: 2.0 },
+        { score: 50, interval: 1.7 },
+        { score: 70, interval: 1.5 },
+        { score: 90, interval: 1.3 }
+    ];
 
 };
 
@@ -77,6 +88,13 @@ MainGameScene.prototype._gamePhase = function(delta) {
 
         // スコア加算
         this.score++;
+
+        // みかん出現頻度
+        this.DIFFICULTY_TABLE.forEach(function(difficult) {
+            if (this.score >= difficult.score) {
+                this.mikanController.mikanInterval = difficult.interval;
+            }
+        }.bind(this));
 
         // みかん取得効果音を再生
         if (this.score % 10 == 0) {
