@@ -27,6 +27,9 @@ MikanController.prototype.update = function(delta) {
     this.mikans.forEach(function(mikan, index) {
         mikan.y += 200 * delta;
         if (mikan.y > 600) {
+            // みかん落下時の効果音
+            Audio.play('lostmikan');
+
             this.mikans.splice(index, 1);
         }
     }.bind(this));

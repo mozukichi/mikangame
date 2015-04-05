@@ -35,6 +35,9 @@ GameSystem.init = function() {
   // Canvasの初期化
   GameSystem.setupCanvas();
 
+  // 音声の初期化
+  Audio.init();
+
   // 入力の初期化
   Input.init();
 

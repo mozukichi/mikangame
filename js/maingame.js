@@ -32,11 +32,24 @@ MainGameScene.prototype.update = function(delta) {
 
     // 箱とみかんの衝突判定
     this.mikanController.collideMikan(this.box, function() {
+
+        // スコア加算
         this.score++;
+
+        // みかん取得効果音を再生
+        if (this.score % 10 == 0) {
+            // 10個毎に「やったね」を再生
+            Audio.play('getmikan', function() {
+                Audio.play('yattane');
+            });
+        } else {
+            Audio.play('getmikan');
+        }
 
         // エミッター作成
         ParticleSystem.createEmitter(this.box.position.x + 40, 455, 0, 30,
             Math.PI * 5 / 4, Math.PI * 7 / 4);
+
     }.bind(this));
 
 };
