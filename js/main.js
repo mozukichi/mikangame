@@ -43,9 +43,6 @@ GameSystem.init = function() {
 
     // アセットの読み込み
     Asset.loadAssets(function() {
-        // BGMの再生
-        Audio.playMusic('assets/mikanmusic.mp3', true);
-
         // シーン設定
         GameSystem.currentScene = new TopScene();
 
@@ -63,6 +60,7 @@ GameSystem.setupCanvas = function() {
 
     GameSystem.canvas = document.getElementById('canvas');
     GameSystem.canvas.addEventListener('click', GameSystem.onClick);
+    GameSystem.canvas.addEventListener('mousemove', GameSystem.onMouseMove);
 
     var ctx = GameSystem.canvas.getContext('2d');
     ctx.font = '48px monospace';
@@ -99,6 +97,19 @@ GameSystem.onClick = function(e) {
 
 };
 
+
+/**
+ * マウスカーソル移動時
+ */
+GameSystem.onMouseMove = function(e) {
+
+    if (GameSystem.currentScene && GameSystem.currentScene.onMouseMove &&
+        typeof GameSystem.currentScene.onMouseMove == 'function')
+    {
+        GameSystem.currentScene.onMouseMove(e);
+    }
+};
+
 /**
  * フルスクリーンイベント
  */
@@ -109,9 +120,9 @@ GameSystem.onFullscreenChange = function() {
         document.mozFullscreenElement ||
         document.msFullscreenElement)
     {
-        game.isFullscreen = true;
+        GameSystem.isFullscreen = true;
     } else {
-        game.isFullscreen = false;
+        GameSystem.isFullscreen = false;
     }
 
 };
@@ -137,7 +148,10 @@ GameSystem.update = function(time) {
     }
     GameSystem.lastTime = time;
 
-    if (GameSystem.currentScene) {
+    if (GameSystem.currentScene &&
+        GameSystem.currentScene.update &&
+        typeof GameSystem.currentScene.update == 'function')
+    {
         GameSystem.currentScene.update(delta);
     }
 
@@ -158,7 +172,10 @@ GameSystem.render = function() {
     var ctx = GameSystem.ctx;
     ctx.clearRect(0, 0, GameSystem.canvas.width, GameSystem.canvas.height);
 
-    if (GameSystem.currentScene) {
+    if (GameSystem.currentScene &&
+        GameSystem.currentScene.render &&
+        typeof GameSystem.currentScene.render == 'function')
+    {
         GameSystem.currentScene.render(ctx);
     }
 

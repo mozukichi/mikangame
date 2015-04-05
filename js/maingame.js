@@ -3,18 +3,21 @@
  */
 var MainGameScene = function() {
 
-  // ライフ
-  this.life = 3; // 初期ライフ
+    // フェーズ
+    this.phase = 'start';
 
-  // スコア
-  this.score = 0;
-  this.scoreTextScale = 1;
+    // ライフ
+    this.life = 3; // 初期ライフ
 
-  // 箱（プレイヤー）
-  this.box = new Box();
+    // スコア
+    this.score = 0;
+    this.scoreTextScale = 1;
 
-  // みかん操作
-  this.mikanController = new MikanController();
+    // 箱（プレイヤー）
+    this.box = new Box();
+
+    // みかん操作
+    this.mikanController = new MikanController();
 
 };
 
@@ -23,6 +26,35 @@ var MainGameScene = function() {
  * 更新
  */
 MainGameScene.prototype.update = function(delta) {
+
+    switch (this.phase) {
+        case 'start':
+            // スタート
+            Audio.play('gamestart', function() {
+                // ゲームフェーズへ
+                this.phase = 'game';
+
+                // BGMの再生
+                Audio.playMusic('assets/mikanmusic.mp3', true);
+            }.bind(this));
+            this.phase = null;
+            break;
+        case 'game':
+            // ゲーム
+            this._gamePhase(delta);
+            break;
+        default:
+            // nothing to do
+            break;
+    }
+
+};
+
+
+/**
+ * ゲームフェーズ
+ */
+MainGameScene.prototype._gamePhase = function(delta) {
 
     // 箱（プレイヤー）の更新
     this.box.update(delta);
