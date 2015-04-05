@@ -6,11 +6,11 @@ var EndingScene = function() {
     // スタッフクレジット
     this.STAFF_CREDIT = [
         { role: 'プログラム', name: 'もっち' },
-        { role: 'イラスト', name: 'もっち' },
-        { role: '効果音', name: 'もっち' },
-        { role: '音楽', name: 'みうちゃん' },
-        { role: '声', name: 'みうちゃん' },
-        { role: '企画・原案', name: 'みうちゃん' }
+        { role: 'え', name: 'もっち' },
+        { role: 'おと', name: 'もっち' },
+        { role: 'うた', name: 'みうちゃん' },
+        { role: 'こえ', name: 'みうちゃん' },
+        { role: 'かんがえたひと', name: 'みうちゃん' }
     ];
 
     this.FADE_TIME = 0.5;
@@ -20,6 +20,9 @@ var EndingScene = function() {
     this._time = 1;
     this._alpha = 0;
     this._currentCredit = 0;
+
+    // BGM
+    Audio.playMusic('assets/ending.mp3', true);
 
 };
 
@@ -59,6 +62,7 @@ EndingScene.prototype.update = function(delta) {
                 this._currentCredit++;
 
                 if (this._currentCredit >= this.STAFF_CREDIT.length) {
+                    Audio.stopMusic();
                     GameSystem.currentScene = new TopScene();
                 }
             }

@@ -55,7 +55,11 @@ MainGameScene.prototype.update = function(delta) {
                 // BGMの再生
                 Audio.playMusic('assets/mikanmusic.mp3', true);
             }.bind(this));
-            this.phase = null;
+            this.phase = 'wait';
+            break;
+        case 'wait':
+            // 箱（プレイヤー）の更新
+            this.box.update(delta);
             break;
         case 'game':
             // ゲーム
