@@ -47,7 +47,7 @@ GameSystem.init = function() {
         Audio.playMusic('assets/mikanmusic.mp3', true);
 
         // シーン設定
-        GameSystem.currentScene = new MainGameScene();
+        GameSystem.currentScene = new TopScene();
 
         // 毎フレーム処理の開始
         window.requestAnimationFrame(GameSystem.update);
@@ -61,13 +61,13 @@ GameSystem.init = function() {
  */
 GameSystem.setupCanvas = function() {
 
-  GameSystem.canvas = document.getElementById('canvas');
-  GameSystem.canvas.addEventListener('click', GameSystem.onClick);
+    GameSystem.canvas = document.getElementById('canvas');
+    GameSystem.canvas.addEventListener('click', GameSystem.onClick);
 
-  var ctx = GameSystem.canvas.getContext('2d');
-  ctx.font = '48px monospace';
-  ctx.textBaseline = 'top';
-  GameSystem.ctx = ctx;
+    var ctx = GameSystem.canvas.getContext('2d');
+    ctx.font = '48px monospace';
+    ctx.textBaseline = 'top';
+    GameSystem.ctx = ctx;
 
 };
 
@@ -77,21 +77,25 @@ GameSystem.setupCanvas = function() {
  */
 GameSystem.onClick = function(e) {
 
-  // 音のOn/Off
-  if (740 <= e.offsetX && e.offsetX <= 740 + 48 &&
-      10 <= e.offsetY && e.offsetY <= 10 + 48)
-  {
-    GameSystem.useAudio = !GameSystem.useAudio;
-    console.log(GameSystem.useAudio);
-  }
+    // 音のOn/Off
+    if (740 <= e.offsetX && e.offsetX <= 740 + 48 &&
+        10 <= e.offsetY && e.offsetY <= 10 + 48)
+    {
+        GameSystem.useAudio = !GameSystem.useAudio;
+        console.log(GameSystem.useAudio);
+    }
 
-  // フルスクリーン
-  if (GameSystem.isFullscreen == false &&
-      740 <= e.offsetX && e.offsetX <= 740 + 48 &&
-      70 <= e.offsetY && e.offsetY <= 70 + 48)
-  {
-    requestFullscreen.apply(document.getElementById('container'));
-  }
+    // フルスクリーン
+    if (GameSystem.isFullscreen == false &&
+        740 <= e.offsetX && e.offsetX <= 740 + 48 &&
+        70 <= e.offsetY && e.offsetY <= 70 + 48)
+    {
+        requestFullscreen.apply(document.getElementById('container'));
+    }
+
+    if (GameSystem.currentScene && typeof GameSystem.currentScene.onClick == 'function') {
+        GameSystem.currentScene.onClick(e);
+    }
 
 };
 
@@ -100,16 +104,18 @@ GameSystem.onClick = function(e) {
  */
 GameSystem.onFullscreenChange = function() {
 
-  if (document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.mozFullscreenElement ||
-      document.msFullscreenElement) {
-    game.isFullscreen = true;
-  } else {
-    game.isFullscreen = false;
-  }
+    if (document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullscreenElement ||
+        document.msFullscreenElement)
+    {
+        game.isFullscreen = true;
+    } else {
+        game.isFullscreen = false;
+    }
 
 };
+
 window.addEventListener('fullscreenchange', GameSystem.onFullscreenChange);
 window.addEventListener('webkitfullscreenchange', GameSystem.onFullscreenChange);
 window.addEventListener('mozfullscreenchange', GameSystem.onFullscreenChange);

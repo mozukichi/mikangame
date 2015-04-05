@@ -42,7 +42,9 @@ Audio.play = function(name, onEnded) {
  */
 Audio.playMusic = function(src, loop) {
     this.audioElem.src = src;
-    if (!(loop == undefined)) {
+    if (loop == undefined) {
+        this.audioElem.loop = false;
+    } else {
         this.audioElem.loop = loop;
     }
     this.audioElem.play();

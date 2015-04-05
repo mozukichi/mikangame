@@ -3,19 +3,20 @@ var Asset = {};
 // アセット情報
 Asset.assets = [
     // 画像
-    { type: 'image', name: 'speaker',    src: 'assets/speaker.png' },
-    { type: 'image', name: 'speaker_no', src: 'assets/speaker_no.png' },
-    { type: 'image', name: 'fullscreen', src: 'assets/fullscreen.png' },
-    { type: 'image', name: 'box',        src: 'assets/box.png' },
-    { type: 'image', name: 'back',       src: 'assets/back.png' },
-    { type: 'image', name: 'mikan',      src: 'assets/mikan.png' },
-    { type: 'image', name: 'life',       src: 'assets/life.png' },
-    { type: 'image', name: 'star',       src: 'assets/star.png' },
+    { type: 'image', name: 'startbutton', src: 'assets/startbutton.png' },
+    { type: 'image', name: 'speaker',     src: 'assets/speaker.png' },
+    { type: 'image', name: 'speaker_no',  src: 'assets/speaker_no.png' },
+    { type: 'image', name: 'fullscreen',  src: 'assets/fullscreen.png' },
+    { type: 'image', name: 'box',         src: 'assets/box.png' },
+    { type: 'image', name: 'back',        src: 'assets/back.png' },
+    { type: 'image', name: 'mikan',       src: 'assets/mikan.png' },
+    { type: 'image', name: 'life',        src: 'assets/life.png' },
+    { type: 'image', name: 'star',        src: 'assets/star.png' },
 
     // 効果音
-    { type: 'sound', name: 'getmikan',   src: 'assets/getmikan.mp3' },
-    { type: 'sound', name: 'lostmikan',  src: 'assets/lostmikan.mp3' },
-    { type: 'sound', name: 'yattane',    src: 'assets/yattane.mp3' }
+    { type: 'sound', name: 'getmikan',    src: 'assets/getmikan.mp3' },
+    { type: 'sound', name: 'lostmikan',   src: 'assets/lostmikan.mp3' },
+    { type: 'sound', name: 'yattane',     src: 'assets/yattane.mp3' }
 ];
 
 
