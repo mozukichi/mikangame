@@ -12,6 +12,8 @@ var MikanController = function() {
 
   this.mikanImage = Asset.images.mikan;
 
+  this.onLostMikan = null; // みかん落下時のイベント
+
 };
 
 
@@ -31,6 +33,10 @@ MikanController.prototype.update = function(delta) {
             Audio.play('lostmikan');
 
             this.mikans.splice(index, 1);
+
+            if (this.onLostMikan && typeof this.onLostMikan == 'function') {
+                this.onLostMikan();
+            }
         }
     }.bind(this));
 

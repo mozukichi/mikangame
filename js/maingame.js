@@ -9,6 +9,10 @@ var MainGameScene = function() {
     // ライフ
     this.life = 3; // 初期ライフ
 
+    // ライフ消失アニメーション
+    this._lifePhase = null;
+    this._lifePhaseTime = 0;
+
     // スコア
     this.score = 0;
     this.scoreTextScale = 1;
@@ -18,6 +22,9 @@ var MainGameScene = function() {
 
     // みかん操作
     this.mikanController = new MikanController();
+
+    // みかん落下時のイベント
+    this.mikanController.onLostMikan = this._onLostMikan.bind(this);
 
 };
 
@@ -42,6 +49,9 @@ MainGameScene.prototype.update = function(delta) {
         case 'game':
             // ゲーム
             this._gamePhase(delta);
+            break;
+        case 'gameover':
+            // ゲームオーバー
             break;
         default:
             // nothing to do
@@ -84,6 +94,40 @@ MainGameScene.prototype._gamePhase = function(delta) {
 
     }.bind(this));
 
+    // ライフ消失
+    if (this._lifePhase == 'losting') {
+        this._lifePhaseTime -= delta;
+        if (this._lifePhaseTime <= 0) {
+            this.life--;
+            this._lifePhase = null;
+        }
+    }
+
+    // ゲームオーバー
+    if (this.life <= 0) {
+        this.phase = 'gameover';
+
+        Audio.stopMusic();
+        Audio.play('gameover', function() {
+            GameSystem.currentScene = new TopScene();
+        });
+    }
+
+};
+
+
+/**
+ * みかん落下時
+ */
+MainGameScene.prototype._onLostMikan = function() {
+
+    if (this._lifePhase == 'losting') {
+        this.life--;
+    } else {
+        this._lifePhase = 'losting';
+    }
+    this._lifePhaseTime = 0.5;
+
 };
 
 
@@ -103,8 +147,19 @@ MainGameScene.prototype.render = function(ctx) {
 
     // ライフの描画
     this.life.times(function(i) {
-        ctx.drawImage(Asset.images.life, 20, 520 - i * 60);
-    });
+        var drawLife = true;
+
+        // ライフ消失時のアニメーション
+        if (i == this.life - 1 && this._lifePhase == 'losting') {
+            if (this._lifePhaseTime % 0.1 < 0.05) {
+                drawLife = false;
+            }
+        }
+
+        if (drawLife) {
+            ctx.drawImage(Asset.images.life, 20, 520 - i * 60);
+        }
+    }.bind(this));
 
     // スコアの描画
     var scoreText = '' + this.score + 'こ';

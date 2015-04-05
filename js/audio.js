@@ -49,3 +49,12 @@ Audio.playMusic = function(src, loop) {
     }
     this.audioElem.play();
 };
+
+
+/**
+ * 音楽の停止
+ */
+Audio.stopMusic = function() {
+    this.audioElem.pause();
+    this.audioElem.currentTime = 0;
+};
