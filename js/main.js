@@ -32,22 +32,25 @@ var GameSystem = {
  */
 GameSystem.init = function() {
 
-  // Canvasの初期化
-  GameSystem.setupCanvas();
+    // Canvasの初期化
+    GameSystem.setupCanvas();
 
-  // 音声の初期化
-  Audio.init();
+    // 音声の初期化
+    Audio.init();
 
-  // 入力の初期化
-  Input.init();
+    // 入力の初期化
+    Input.init();
 
-  // アセットの読み込み
-  Asset.loadAssets(function() {
-      // シーン設定
-      GameSystem.currentScene = new MainGameScene();
+    // アセットの読み込み
+    Asset.loadAssets(function() {
+        // BGMの再生
+        Audio.playMusic('assets/mikanmusic.mp3', true);
 
-      // 毎フレーム処理の開始
-      window.requestAnimationFrame(GameSystem.update);
+        // シーン設定
+        GameSystem.currentScene = new MainGameScene();
+
+        // 毎フレーム処理の開始
+        window.requestAnimationFrame(GameSystem.update);
   });
 
 };

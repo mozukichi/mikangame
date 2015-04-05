@@ -2,7 +2,8 @@
  * 音声
  */
 var Audio = {
-    ctx: null
+    ctx: null,
+    audioElem: null
 };
 
 
@@ -11,6 +12,7 @@ var Audio = {
  */
 Audio.init = function() {
     this.ctx = new AudioContext();
+    this.audioElem = document.createElement('audio');
 };
 
 
@@ -32,4 +34,16 @@ Audio.play = function(name, onEnded) {
     }
 
     source.start(0);
+};
+
+
+/**
+ * 音楽の再生
+ */
+Audio.playMusic = function(src, loop) {
+    this.audioElem.src = src;
+    if (!(loop == undefined)) {
+        this.audioElem.loop = loop;
+    }
+    this.audioElem.play();
 };
