@@ -1,0 +1,10 @@
+#container:fullscreen,
+#container:-webkit-full-screen,
+#container:-moz-full-screen,
+#container:-ms-full-screen {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
