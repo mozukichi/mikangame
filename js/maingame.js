@@ -35,7 +35,7 @@ MainGameScene.prototype.update = function(delta) {
         this.score++;
 
         // エミッター作成
-        GameSystem.createEmitter(this.box.position.x + 40, 455, 0, 30,
+        ParticleSystem.createEmitter(this.box.position.x + 40, 455, 0, 30,
             Math.PI * 5 / 4, Math.PI * 7 / 4);
     }.bind(this));
 

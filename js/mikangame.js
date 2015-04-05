@@ -22,11 +22,6 @@ var GameSystem = {
     // 毎フレーム更新の経過時間計算用
     lastTime: null,
 
-    // パーティクル情報
-    emitters: [],
-    particles: [],
-    EMITTER_INTERVAL: 0.2,
-
     // 現在シーン
     currentScene: null
 
@@ -135,66 +130,10 @@ GameSystem.update = function(time) {
     }
 
     // パーティクル
-    GameSystem.updateParticle(delta);
+    ParticleSystem.update(delta);
 
     // 描画
     GameSystem.render();
-
-};
-
-
-/**
- * エミッターの作成
- */
-GameSystem.createEmitter = function(x, y, life, amount, thetaStart, thetaEnd) {
-
-  GameSystem.emitters.push({
-    x: x, y: y,
-    timer: 0, life: life, amount: amount,
-    thetaStart: thetaStart, thetaEnd: thetaEnd
-  });
-
-};
-
-
-/**
- * パーティクルの更新
- */
-GameSystem.updateParticle = function(delta) {
-
-  // パーティクル
-  GameSystem.particles.forEach(function(particle, index) {
-    particle.x += particle.vx * delta;
-    particle.y += particle.vy * delta;
-    particle.vy += 500 * delta;
-    particle.life -= delta;
-    if (particle.life <= 0) {
-      GameSystem.particles.splice(index, 1);
-    }
-  });
-
-  // エミッター
-  GameSystem.emitters.forEach(function(emitter, index) {
-    if (emitter.timer <= 0) {
-      emitter.amount.times(function() {
-        var velo = Math.random() * 100 + 300;
-        var theta = Math.random() * (emitter.thetaEnd - emitter.thetaStart) + emitter.thetaStart;
-        GameSystem.particles.push({
-          x: emitter.x, y: emitter.y,
-          vx: Math.cos(theta) * velo,
-          vy: Math.sin(theta) * velo,
-          life: Math.random() * 0.3 + 0.3,
-          opacity: Math.random() * 0.5 + 0.5
-        });
-      });
-      emitter.timer = GameSystem.EMITTER_INTERVAL;
-    }
-
-    emitter.life -= delta;
-    if (emitter.life <= 0) {
-      GameSystem.emitters.splice(index, 1);
-    }
-  });
 
 };
 
@@ -212,13 +151,7 @@ GameSystem.render = function() {
     }
 
     // パーティクル
-    ctx.globalCompositeOperation = 'lighter';
-    GameSystem.particles.forEach(function(particle) {
-        ctx.globalAlpha = particle.opacity;
-        ctx.drawImage(Asset.images.star, particle.x, particle.y);
-    });
-    ctx.globalAlpha = 1.0;
-    ctx.globalCompositeOperation = 'source-over';
+    ParticleSystem.render(ctx);
 
     // 音のOn/Offボタン
     ctx.drawImage(Asset.images['speaker' + (GameSystem.useAudio ? '' : '_no')], 740, 10);
