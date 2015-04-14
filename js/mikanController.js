@@ -3,16 +3,19 @@
  */
 var MikanController = function() {
 
-  // みかん情報
-  this.mikans = [];
+    // みかん発生位置の振れ幅
+    this.RANDOM_WIDTH = 500;
 
-  this.mikanInterval = 3; // 何秒に1回みかんが生成される？
-  this.mikanTimer = 1;
-  this.lastMikanXPos = 400; // 前回みかんが生成されたX座標
+    // みかん情報
+    this.mikans = [];
 
-  this.mikanImage = Asset.images.mikan;
+    this.mikanInterval = 0.1; // 何秒に1回みかんが生成される？
+    this.mikanTimer = 1;
+    this.lastMikanXPos = 400; // 前回みかんが生成されたX座標
 
-  this.onLostMikan = null; // みかん落下時のイベント
+    this.mikanImage = Asset.images.mikan;
+
+    this.onLostMikan = null; // みかん落下時のイベント
 
 };
 
@@ -52,15 +55,21 @@ MikanController.prototype._generateMikan = function(delta) {
     if (this.mikanTimer <= 0) {
         var mikan = {};
         var lastMikanXPos = this.lastMikanXPos;
-        if (lastMikanXPos <= 0) {
-            mikan.x = lastMikanXPos + (Math.random() * 250);
-        } else if (lastMikanXPos >= 800 - this.mikanImage.width) {
-            mikan.x = lastMikanXPos + -(Math.random() * 250);
-        } else {
-            mikan.x = lastMikanXPos + (Math.random() * 500) - 250;
+
+        // みかん出現位置範囲
+        var spawnRange = {};
+        spawnRange.start = lastMikanXPos - this.RANDOM_WIDTH / 2;
+        spawnRange.end = lastMikanXPos + this.RANDOM_WIDTH / 2;
+
+        if (spawnRange.start < 0) {
+            spawnRange.start = 0;
         }
-        if (mikan.x < 0) mikan.x = 0;
-        if (mikan.x + this.mikanImage.width > 800) mikan.x = 800 - this.mikanImage.width;
+        if (spawnRange.end >= 800 - this.mikanImage.width) {
+            spawnRange.end = 800 - this.mikanImage.width;
+        }
+
+        mikan.x = Math.random() * (spawnRange.end - spawnRange.start) + spawnRange.start;
+
         this.lastMikanXPos = mikan.x;
         mikan.y = -this.mikanImage.height;
         this.mikans.push(mikan);
