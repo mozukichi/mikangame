@@ -63,7 +63,7 @@ EndingScene.prototype.update = function(delta) {
 
                 if (this._currentCredit >= this.STAFF_CREDIT.length) {
                     Audio.stopMusic();
-                    GameSystem.currentScene = new TopScene();
+                    Transition.transitionTo('fade', 2, new TopScene());
                 }
             }
             break;
@@ -83,20 +83,23 @@ EndingScene.prototype.render = function(ctx) {
 
     ctx.drawImage(Asset.images.ending, 50, 84);
 
-    ctx.globalAlpha = this._alpha;
+    if (this._currentCredit < this.STAFF_CREDIT.length) {
+        ctx.save();
+        ctx.globalAlpha = this._alpha;
 
-    var staff = this.STAFF_CREDIT[this._currentCredit];
+        var staff = this.STAFF_CREDIT[this._currentCredit];
 
-    // 役割
-    ctx.font = '28px monospace';
-    ctx.fillStyle = 'lightgray';
-    ctx.fillText(staff.role, 380, 250);
+        // 役割
+        ctx.font = '28px monospace';
+        ctx.fillStyle = 'lightgray';
+        ctx.fillText(staff.role, 380, 250);
 
-    // 名前
-    ctx.font = '36px monospace';
-    ctx.fillStyle = 'white';
-    ctx.fillText(staff.name, 420, 300);
+        // 名前
+        ctx.font = '36px monospace';
+        ctx.fillStyle = 'white';
+        ctx.fillText(staff.name, 420, 300);
 
-    ctx.globalAlpha = 1;
+        ctx.restore();
+    }
 
 };

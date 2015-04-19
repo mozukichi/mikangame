@@ -151,7 +151,12 @@ GameSystem.update = function(time) {
         GameSystem.currentScene.update &&
         typeof GameSystem.currentScene.update == 'function')
     {
-        GameSystem.currentScene.update(delta);
+        // トランジション
+        if (Transition.isTransiting) {
+            Transition.update(delta);
+        } else {
+            GameSystem.currentScene.update(delta);
+        }
     }
 
     // パーティクル
@@ -175,7 +180,12 @@ GameSystem.render = function() {
         GameSystem.currentScene.render &&
         typeof GameSystem.currentScene.render == 'function')
     {
-        GameSystem.currentScene.render(ctx);
+        // トランジション
+        if (Transition.isTransiting) {
+            Transition.render(ctx);
+        } else {
+            GameSystem.currentScene.render(ctx);
+        }
     }
 
     // パーティクル

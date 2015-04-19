@@ -83,11 +83,12 @@ TopScene.prototype.render = function(ctx) {
     ctx.fillText('エンターキーか下のボタンでゲームスタート', 50, 340);
 
     // スタートボタンの描画
+    ctx.save();
     if (this._overStartButton) {
         ctx.globalAlpha = 0.7;
     }
     ctx.drawImage(Asset.images.startbutton, 400, 450);
-    ctx.globalAlpha = 1;
+    ctx.restore();
 
 };
 
@@ -96,6 +97,6 @@ TopScene.prototype.render = function(ctx) {
  * ゲームスタート
  */
 TopScene.prototype._startGame = function() {
-    GameSystem.currentScene = new MainGameScene();
+    Transition.transitionTo('fade', 1, new MainGameScene());
     GameSystem.canvas.style.cursor = '';
 };

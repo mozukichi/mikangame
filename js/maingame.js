@@ -115,7 +115,7 @@ MainGameScene.prototype._gamePhase = function(delta) {
             Audio.play('getmikan', function() {
                 Audio.play('complete', function() {
                     // エンディングへ
-                    GameSystem.currentScene = new EndingScene();
+                    Transition.transitionTo('fade', 1, new EndingScene());
                 });
             });
             this.phase = 'claer';
@@ -144,7 +144,7 @@ MainGameScene.prototype._gamePhase = function(delta) {
 
         Audio.stopMusic();
         Audio.play('gameover', function() {
-            GameSystem.currentScene = new TopScene();
+            Transition.transitionTo('fade', 1, new TopScene());
         });
     }
 

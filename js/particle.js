@@ -71,12 +71,12 @@ ParticleSystem.createEmitter = function(x, y, life, amount, thetaStart, thetaEnd
  */
 ParticleSystem.render = function(ctx) {
 
+    ctx.save();
     ctx.globalCompositeOperation = 'lighter';
     this.particles.forEach(function(particle) {
         ctx.globalAlpha = particle.opacity;
         ctx.drawImage(Asset.images.star, particle.x, particle.y);
     });
-    ctx.globalAlpha = 1.0;
-    ctx.globalCompositeOperation = 'source-over';
+    ctx.restore();
 
 };
