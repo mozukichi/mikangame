@@ -24,11 +24,11 @@ TopScene.prototype.update = function(delta) {
 /**
  * クリック時
  */
-TopScene.prototype.onClick = function(e) {
+TopScene.prototype.onClick = function(x, y, keyCode) {
 
     // スタートボタン
-    if (400 <= e.offsetX && e.offsetX <= 750 &&
-        450 <= e.offsetY && e.offsetY <= 550)
+    if (400 <= x && x <= 750 &&
+        450 <= y && y <= 550)
     {
         // ゲームスタート
         this._startGame();
@@ -40,11 +40,11 @@ TopScene.prototype.onClick = function(e) {
 /**
  * マウスカーソル移動時
  */
-TopScene.prototype.onMouseMove = function(e) {
+TopScene.prototype.onMouseMove = function(x, y) {
 
     // スタートボタン
-    if (400 <= e.offsetX && e.offsetX <= 750 &&
-        450 <= e.offsetY && e.offsetY <= 550)
+    if (400 <= x && x <= 750 &&
+        450 <= y && y <= 550)
     {
         this._overStartButton = true;
         GameSystem.canvas.style.cursor = 'pointer';

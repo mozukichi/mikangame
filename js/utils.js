@@ -12,5 +12,5 @@ Number.prototype.times = function(funct) {
 var requestFullscreen =
   Element.prototype.requestFullscreen ||
   Element.prototype.webkitRequestFullscreen ||
-  Element.prototype.mozRequestFullscreen ||
+  Element.prototype.mozRequestFullScreen ||
   Element.prototype.msRequestFullscreen;

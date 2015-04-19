@@ -73,10 +73,14 @@ GameSystem.setupCanvas = function() {
  * クリックイベント
  */
 GameSystem.onClick = function(e) {
+    var offsetX = e.offsetX == undefined ? e.layerX : e.offsetX;
+    var offsetY = e.offsetY == undefined ? e.layerY : e.offsetY;
+    var x = offsetX * (GameSystem.canvas.width / GameSystem.canvas.offsetWidth);
+    var y = offsetY * (GameSystem.canvas.height / GameSystem.canvas.offsetHeight);
 
     // 音のOn/Off
-    if (740 <= e.offsetX && e.offsetX <= 740 + 48 &&
-        10 <= e.offsetY && e.offsetY <= 10 + 48)
+    if (740 <= x && x <= 740 + 48 &&
+        10 <= y && y <= 10 + 48)
     {
         GameSystem.useAudio = !GameSystem.useAudio;
         Audio.setEnable(GameSystem.useAudio);
@@ -84,14 +88,14 @@ GameSystem.onClick = function(e) {
 
     // フルスクリーン
     if (GameSystem.isFullscreen == false &&
-        740 <= e.offsetX && e.offsetX <= 740 + 48 &&
-        70 <= e.offsetY && e.offsetY <= 70 + 48)
+        740 <= x && x <= 740 + 48 &&
+        70 <= y && y <= 70 + 48)
     {
         requestFullscreen.apply(document.getElementById('container'));
     }
 
     if (GameSystem.currentScene && typeof GameSystem.currentScene.onClick == 'function') {
-        GameSystem.currentScene.onClick(e);
+        GameSystem.currentScene.onClick(x, y, e.keyCode);
     }
 
 };
@@ -101,13 +105,18 @@ GameSystem.onClick = function(e) {
  * マウスカーソル移動時
  */
 GameSystem.onMouseMove = function(e) {
+    var offsetX = e.offsetX == undefined ? e.layerX : e.offsetX;
+    var offsetY = e.offsetY == undefined ? e.layerY : e.offsetY;
+    var x = offsetX * (GameSystem.canvas.width / GameSystem.canvas.offsetWidth);
+    var y = offsetY * (GameSystem.canvas.height / GameSystem.canvas.offsetHeight);
 
     if (GameSystem.currentScene && GameSystem.currentScene.onMouseMove &&
         typeof GameSystem.currentScene.onMouseMove == 'function')
     {
-        GameSystem.currentScene.onMouseMove(e);
+        GameSystem.currentScene.onMouseMove(x, y);
     }
 };
+
 
 /**
  * フルスクリーンイベント
@@ -125,7 +134,6 @@ GameSystem.onFullscreenChange = function() {
     }
 
 };
-
 window.addEventListener('fullscreenchange', GameSystem.onFullscreenChange);
 window.addEventListener('webkitfullscreenchange', GameSystem.onFullscreenChange);
 window.addEventListener('mozfullscreenchange', GameSystem.onFullscreenChange);
