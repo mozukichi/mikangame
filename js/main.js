@@ -79,7 +79,7 @@ GameSystem.onClick = function(e) {
         10 <= e.offsetY && e.offsetY <= 10 + 48)
     {
         GameSystem.useAudio = !GameSystem.useAudio;
-        console.log(GameSystem.useAudio);
+        Audio.setEnable(GameSystem.useAudio);
     }
 
     // フルスクリーン

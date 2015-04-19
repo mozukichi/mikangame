@@ -3,6 +3,8 @@
  */
 var Audio = {
     ctx: null,
+    gain: null,
+
     audioElem: null
 };
 
@@ -11,8 +13,25 @@ var Audio = {
  * 初期化
  */
 Audio.init = function() {
+    // Audio API
     this.ctx = new AudioContext();
+
+    // Gain
+    this.gain = this.ctx.createGain();
+    this.gain.connect(this.ctx.destination);
+    this.gain.gain.value = 1;
+
+    // Audio Element
     this.audioElem = document.createElement('audio');
+};
+
+
+/**
+ * ON/OFF
+ */
+Audio.setEnable = function(enable) {
+    this.gain.gain.value = enable ? 1 : 0;
+    this.audioElem.volume = enable ? 1 : 0;
 };
 
 
@@ -24,10 +43,10 @@ Audio.play = function(name, onEnded) {
         throw new Error('指定した効果音リソースが無い: ' + name);
     }
 
-    var source = Audio.ctx.createBufferSource();
+    var source = this.ctx.createBufferSource();
 
     source.buffer = Asset.sounds[name];
-    source.connect(Audio.ctx.destination);
+    source.connect(this.gain);
 
     if (onEnded && typeof onEnded == 'function') {
         source.onended = onEnded;
