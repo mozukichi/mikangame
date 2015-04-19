@@ -63,7 +63,6 @@ GameSystem.setupCanvas = function() {
     GameSystem.canvas.addEventListener('mousemove', GameSystem.onMouseMove);
 
     var ctx = GameSystem.canvas.getContext('2d');
-    ctx.font = '48px monospace';
     ctx.textBaseline = 'top';
     GameSystem.ctx = ctx;
 

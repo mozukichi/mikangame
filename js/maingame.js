@@ -199,6 +199,7 @@ MainGameScene.prototype.render = function(ctx) {
     // スコアの描画
     var scoreText = '' + this.score + 'こ';
     var metrics = ctx.measureText(scoreText);
+    ctx.font = '48px monospace';
     ctx.fillStyle = 'white';
     ctx.strokeStyle = 'green';
     ctx.lineWidth = 8;

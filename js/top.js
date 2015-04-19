@@ -59,6 +59,20 @@ TopScene.prototype.render = function(ctx) {
     // 背景の描画
     ctx.drawImage(Asset.images.back, 0, 0);
 
+    // タイトル文字の表示
+    ctx.font = '100px monospace';
+    ctx.strokeStyle = 'brown';
+    ctx.fillStyle = 'orange';
+    ctx.lineWidth = 8;
+    ctx.strokeText('みかんゲーム', 50, 120);
+    ctx.fillText('みかんゲーム', 50, 120);
+
+    // 遊び方の表示
+    ctx.font = '32px monosppace';
+    ctx.fillStyle = 'black';
+    ctx.fillText('カーソルキー 「←」「→」：みかん箱を移動', 50, 300);
+    ctx.fillText('エンターキーか下のボタンでゲームスタート', 50, 340);
+
     // スタートボタンの描画
     if (this._overStartButton) {
         ctx.globalAlpha = 0.7;
