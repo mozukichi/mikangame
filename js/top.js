@@ -6,11 +6,10 @@ var TopScene = function() {
     this._overStartButton = false;
 
     // エンターキーでゲームスタート
-    var onKeyup = function(e) {
-        window.removeEventListener('keyup', onKeyup);
+    this._onKeyup = function(e) {
         this._startGame();
     }.bind(this);
-    window.addEventListener('keyup', onKeyup);
+    window.addEventListener('keyup', this._onKeyup);
 
 };
 
@@ -97,6 +96,7 @@ TopScene.prototype.render = function(ctx) {
  * ゲームスタート
  */
 TopScene.prototype._startGame = function() {
+    window.removeEventListener('keyup', this._onKeyup);
     Transition.transitionTo('fade', 1, new MainGameScene());
     GameSystem.canvas.style.cursor = '';
 };
