@@ -1,7 +1,7 @@
 /**
  * メインゲーム
  */
-var MainGameScene = function() {
+var MainGameScene = function(dificulty) {
 
     // フェーズ
     this.phase = 'start';
@@ -27,16 +27,36 @@ var MainGameScene = function() {
     this.mikanController.onLostMikan = this._onLostMikan.bind(this);
 
     // スコアあたりのみかん出現頻度
-    this.DIFFICULTY_TABLE = [
-        { score: 10, interval: 2.8 },
-        { score: 20, interval: 2.5 },
-        { score: 30, interval: 2.2 },
-        { score: 40, interval: 2.0 },
-        { score: 50, interval: 1.7 },
-        { score: 70, interval: 1.5 },
-        { score: 90, interval: 1.3 }
-    ];
+    this.DIFFICULTY_TABLE = {
+        'normal': [
+            { score: 10, interval: 2.8 },
+            { score: 20, interval: 2.5 },
+            { score: 30, interval: 2.2 },
+            { score: 40, interval: 2.0 },
+            { score: 50, interval: 1.7 },
+            { score: 70, interval: 1.5 },
+            { score: 90, interval: 1.3 }
+        ],
+        'hard': [
+            { score: 10, interval: 1.5 },
+            { score: 20, interval: 1.3 },
+            { score: 30, interval: 1.0 },
+            { score: 40, interval: 0.8 },
+            { score: 50, interval: 0.7 },
+            { score: 70, interval: 0.6 },
+            { score: 90, interval: 0.5 }
+        ]
+    };
 
+    this.dificulty = dificulty;
+
+    if (dificulty == 'normal') {
+        this.mikanController.mikanInterval = 3;
+    } else if (dificulty == 'hard') {
+        this.mikanController.mikanInterval = 1.7;
+    } else {
+        throw new Error('Invalid dificulty: ' + dificulty);
+    }
 };
 
 
@@ -97,7 +117,7 @@ MainGameScene.prototype._gamePhase = function(delta) {
         this.score++;
 
         // みかん出現頻度
-        this.DIFFICULTY_TABLE.forEach(function(difficult) {
+        this.DIFFICULTY_TABLE[this.dificulty].forEach(function(difficult) {
             if (this.score >= difficult.score) {
                 this.mikanController.mikanInterval = difficult.interval;
             }
@@ -114,6 +134,9 @@ MainGameScene.prototype._gamePhase = function(delta) {
             Audio.stopMusic();
             Audio.play('getmikan', function() {
                 Audio.play('complete', function() {
+                    // クリアしたら「むずかしいボタン」を出現
+                    localStorage['showHardButton'] = "show";
+
                     // エンディングへ
                     Transition.transitionTo('fade', 1, new EndingScene());
                 });

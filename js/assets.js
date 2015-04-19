@@ -4,6 +4,7 @@ var Asset = {};
 Asset.assets = [
     // 画像
     { type: 'image', name: 'startbutton', src: 'assets/startbutton.png' },
+    { type: 'image', name: 'hardmode',    src: 'assets/hardmode.png' },
     { type: 'image', name: 'speaker',     src: 'assets/speaker.png' },
     { type: 'image', name: 'speaker_no',  src: 'assets/speaker_no.png' },
     { type: 'image', name: 'fullscreen',  src: 'assets/fullscreen.png' },

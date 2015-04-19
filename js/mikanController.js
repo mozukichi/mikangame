@@ -9,7 +9,7 @@ var MikanController = function() {
     // みかん情報
     this.mikans = [];
 
-    this.mikanInterval = 3; // 何秒に1回みかんが生成される？
+    this.mikanInterval = null; // 何秒に1回みかんが生成される？
     this.mikanTimer = 1;
     this.lastMikanXPos = 400; // 前回みかんが生成されたX座標
 
