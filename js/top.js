@@ -5,6 +5,15 @@ var TopScene = function() {
 
     this._overStartButton = false;
 
+    // エンターキーでゲームスタート
+    var onKeyup = function(e) {
+        if (e.keyCode == 13) {
+            window.removeEventListener('keyup', onKeyup);
+            this._startGame();
+        }
+    }.bind(this);
+    window.addEventListener('keyup', onKeyup);
+
 };
 
 
@@ -24,8 +33,8 @@ TopScene.prototype.onClick = function(e) {
     if (400 <= e.offsetX && e.offsetX <= 750 &&
         450 <= e.offsetY && e.offsetY <= 550)
     {
-        GameSystem.currentScene = new MainGameScene();
-        GameSystem.canvas.style.cursor = '';
+        // ゲームスタート
+        this._startGame();
     }
 
 };
@@ -80,4 +89,13 @@ TopScene.prototype.render = function(ctx) {
     ctx.drawImage(Asset.images.startbutton, 400, 450);
     ctx.globalAlpha = 1;
 
+};
+
+
+/**
+ * ゲームスタート
+ */
+TopScene.prototype._startGame = function() {
+    GameSystem.currentScene = new MainGameScene();
+    GameSystem.canvas.style.cursor = '';
 };
