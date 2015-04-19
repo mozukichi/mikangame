@@ -7,10 +7,8 @@ var TopScene = function() {
 
     // エンターキーでゲームスタート
     var onKeyup = function(e) {
-        if (e.keyCode == 13) {
-            window.removeEventListener('keyup', onKeyup);
-            this._startGame();
-        }
+        window.removeEventListener('keyup', onKeyup);
+        this._startGame();
     }.bind(this);
     window.addEventListener('keyup', onKeyup);
 
@@ -79,8 +77,10 @@ TopScene.prototype.render = function(ctx) {
     // 遊び方の表示
     ctx.font = '32px monosppace';
     ctx.fillStyle = 'black';
-    ctx.fillText('カーソルキー 「←」「→」：みかん箱を移動', 50, 300);
-    ctx.fillText('エンターキーか下のボタンでゲームスタート', 50, 340);
+    ctx.fillText('あそびかた', 50, 270);
+    ctx.fillText('うごかす：パソコンの「←」「→」ボタンをおす', 50, 310);
+    ctx.fillText('あそぶ　：パソコンのすきなボタンをおす', 50, 350);
+    ctx.fillText('（したのボタンでもいいよ）', 178, 390);
 
     // スタートボタンの描画
     ctx.save();
