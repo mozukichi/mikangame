@@ -196,14 +196,26 @@ MainGameScene.prototype.render = function(ctx) {
         }
     }.bind(this));
 
+    ctx.save();
+
     // スコアの描画
-    var scoreText = '' + this.score + 'こ';
-    var metrics = ctx.measureText(scoreText);
     ctx.font = '48px monospace';
     ctx.fillStyle = 'white';
     ctx.strokeStyle = 'green';
     ctx.lineWidth = 8;
-    ctx.strokeText(scoreText, 780 - metrics.width, 532);
-    ctx.fillText(scoreText, 780 - metrics.width, 532);
+    var scoreText = 'あと' + (100 - this.score) + 'こ';
+    var metrics = ctx.measureText(scoreText);
+    ctx.strokeText(scoreText, 780 - metrics.width, 500);
+    ctx.fillText(scoreText, 780 - metrics.width, 500);
+
+    // みかんメーター
+    ctx.fillStyle = 'orange';
+    ctx.globalAlpha = 0.7;
+    ctx.fillRect(470, 560, 300, 30);
+    ctx.fillStyle = 'yellow';
+    ctx.globalAlpha = 1;
+    ctx.fillRect(470, 560, 300 * (this.score / 100), 30);
+
+    ctx.restore();
 
 };
